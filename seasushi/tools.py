@@ -1,4 +1,3 @@
-#%%
 import os
 import yaml
 import numpy as np
@@ -10,6 +9,8 @@ import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 from cartopy.mpl.ticker import (LongitudeFormatter, LatitudeFormatter)
+import skill_metrics as sm
+
 
 class Sushi:
     def __init__(self, fish_type, sushi_type):
@@ -111,21 +112,7 @@ def box_files(filenames, lon_min, lon_max, lat_min, lat_max):
     """
     return xr.open_mfdataset(filenames).sel(latitude=slice(lat_min, lat_max), longitude=slice(lon_min, lon_max))
 
-def box_file(filename, lon_min, lon_max, lat_min, lat_max):
-    """
-    Select a geographical box from one single dataset file.
 
-    Parameters:
-    filename (str):  Dataset file path.
-    lon_min (float): The minimum longitude.
-    lon_max (float): The maximum longitude.
-    lat_min (float): The minimum latitude.
-    lat_max (float): The maximum latitude.
-
-    Returns:
-    xarray.Dataset: The subset of the dataset within the specified box.
-    """
-    return xr.open_dataset(filename).sel(latitude=slice(lat_min, lat_max), longitude=slice(lon_min, lon_max))
 
 def save_time_step(input_file, output_file, time_index=None):
     """
@@ -275,4 +262,31 @@ def extract_datetime_info(datetime_raw):
     formatted_datetime = datetime_iso.replace("T", "-").replace(":", "")[:13] + "h"  # Ex.: '2003-07-01-00h'
     return datetime_iso, formatted_datetime
 
-# %%
+
+def plot_taylor(ref, models, output_file):
+    """
+    Generate a Taylor diagram comparing the reference and multiple model data.
+
+    Parameters:
+    ref (numpy.ndarray): The reference data.
+    models (list of numpy.ndarray): The list of model data arrays.
+    output_file (str): The path to save the Taylor diagram.
+    """
+    #  Create a figure for the Taylor diagram
+    fig = plt.figure()
+
+    # Calculate Taylor statistics for all models
+    taylor_stats = [sm.taylor_statistics(model, ref, 'data') for model in models]
+
+    # Plot Taylor diagram for all models
+    sm.taylor_diagram(taylor_stats, fig=fig, marker='o')
+
+    # Add legend to the plot
+    plt.legend(loc='upper right')
+
+    # Save the figure
+    plt.savefig(output_file, bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+
