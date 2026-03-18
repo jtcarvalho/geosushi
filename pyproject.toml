@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "seasushi"
+name = "geosushi"
 version = "0.1.1"
 description = "Functions and scripts collection for metocean numerical models, data plots, and analyses"
 authors = ["jtcarvalho <jtcarvalho@gmail.com>"]
