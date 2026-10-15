@@ -1,6 +1,6 @@
 #%%
 import numpy as np
-from seasushi.tools import plot_taylor
+from geosushi.common.tools import plot_taylor
 
 ref_data = np.random.rand(100)
 model1_data = np.random.rand(100)

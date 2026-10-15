@@ -1,6 +1,6 @@
 #%%
 import unittest
-from seasushi.tools import Sushi
+from geosushi.common.tools import Sushi
 
 class TestSushi(unittest.TestCase):
     def test_sushi_creation(self):

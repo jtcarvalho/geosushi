@@ -9,8 +9,8 @@ import numpy as np
 # Allow importing geosushi from the src layout
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from geosushi.waves.io_pnboia import load_pnboia
-from geosushi.waves.io_ww3 import extract_ww3_at_point
+from geosushi.obs.pnboia import load_pnboia
+from geosushi.ww3.io import extract_ww3_at_point
 
 # ---------------------------------------------------------------------------
 # Settings
