@@ -25,6 +25,7 @@ src/geosushi/
 ├── common/           ← shared by all models
 │   ├── config.py         YAML helpers
 │   ├── bathymetry.py     GEBCO/ETOPO/pygmt loading + interpolation
+│   ├── spectra.py        directional spectrum E(f,θ) polar plot
 │   └── tools.py          plots, Taylor diagram, time/space selection
 ├── obs/              ← observations: PNBOIA buoys, OSCAR currents
 ├── ww3/              ← WAVEWATCH III
@@ -52,6 +53,7 @@ src/geosushi/
 | Sub-grid obstructions | `geosushi ww3 obstr out/rio.meta` | `ww3.compute_obstructions("out/rio.meta")` |
 | BC point list (.list) | `geosushi ww3 bc out/rio.mask2 --id bnd` | `ww3.boundary_points("out/rio.mask2")` |
 | **All four steps** | `geosushi ww3 prep grid.yaml` | |
+| Directional spectrum plot | | `common.spectra.plot_directional_spectrum(E, f, d)` |
 
 `geosushi ww3 mask` accepts `--sides south east ...` when not every edge is open.
 

@@ -82,3 +82,15 @@ def test_stereo_centre_is_pole():
     assert lat[2, 2] == pytest.approx(-90)
     assert lat.max() < -60
     np.testing.assert_allclose(lat, lat[::-1, ::-1])   # symmetric around the pole
+
+
+def test_plot_directional_spectrum():
+    import matplotlib
+    matplotlib.use("Agg")
+    from geosushi.common.spectra import plot_directional_spectrum
+
+    freq = np.geomspace(0.04, 0.5, 30)
+    dirs = np.arange(0, 360, 15.0)
+    E = np.exp(-((freq[:, None] - 0.1) / 0.02) ** 2) * np.cos(np.radians(dirs - 135) / 2) ** 8
+    fig, ax = plot_directional_spectrum(E, freq, dirs, hs=2.0, tp=10.0, dp=135.0)
+    assert fig is not None and ax is not None
