@@ -7,3 +7,7 @@ sushi-py3.12/
 dist/
 src/geosushi/__pycache__/
 src/geosushi/ocean/__pycache__/
+src/geosushi/waves/__pycache__/
+src/geosushi/waves/__init__.py
+src/geosushi/waves/__init__.py
+
