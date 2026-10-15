@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "geosushi"
-version = "0.1.1"
-description = "Functions and scripts collection for metocean numerical models, data plots, and analyses"
+version = "0.2.0"
+description = "Day-to-day tools for metocean models (WW3, SWAN, ROMS, WRF): pre/post-processing, data plots and analyses"
 authors = ["jtcarvalho <jtcarvalho@gmail.com>"]
 readme = "README.md"
+packages = [{ include = "geosushi", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -21,8 +22,12 @@ netcdf4 = "^1.7.2"
 h5netcdf = "^1.5.0"
 
 
+[tool.poetry.scripts]
+geosushi = "geosushi.cli:main"
+
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
+ipykernel = "^7.2.0"
 
 [build-system]
 requires = ["poetry-core"]

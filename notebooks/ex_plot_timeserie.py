@@ -9,8 +9,8 @@ import numpy as np
 # Allow importing geosushi from the src layout
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from geosushi.waves.io_pnboia import load_pnboia
-from geosushi.waves.io_ww3 import extract_ww3_at_point
+from geosushi.obs.pnboia import load_pnboia
+from geosushi.ww3.io import extract_ww3_at_point
 
 # ---------------------------------------------------------------------------
 # Settings
@@ -21,11 +21,11 @@ PNBOIA_FILE = os.path.join(DATA_DIR, 'pnboia_fortaleza.csv')
 WW3_FILE    = os.path.join(DATA_DIR, 'norte_2018.nc')
 
 # PNBOIA Fortaleza buoy position (BSce — Boia Semiestacionária do Ceará)
-BUOY_LAT = -3.7
-BUOY_LON = -38.5
+BUOY_LAT = -3.21
+BUOY_LON = -38.433
 
-START_DATE = '2018-01-01'
-END_DATE   = '2018-05-20'
+START_DATE = '2018-04-20'
+END_DATE   = '2018-04-30'
 
 # ---------------------------------------------------------------------------
 # Load PNBOIA observations
@@ -44,18 +44,18 @@ ww3 = extract_ww3_at_point(
     WW3_FILE,
     lat=BUOY_LAT,
     lon=BUOY_LON,
-    variables=['hs'],
+    variables=['t01'],
     start_date=START_DATE,
     end_date=END_DATE,
 )
 ww3_time = pd.to_datetime(ww3['time'].values)
-ww3_hs   = ww3['hs'].values.squeeze()
+ww3_tp   = ww3['t01'].values.squeeze()
 
 # ---------------------------------------------------------------------------
 # Align on common timestamps
 # ---------------------------------------------------------------------------
-obs_series  = obs['Hs'].dropna()
-ww3_series  = pd.Series(ww3_hs, index=ww3_time).dropna()
+obs_series  = obs['Tp'].dropna()
+ww3_series  = pd.Series(ww3_tp, index=ww3_time).dropna()
 
 common_idx  = obs_series.index.intersection(ww3_series.index)
 obs_common  = obs_series.loc[common_idx]
@@ -74,8 +74,8 @@ ax.plot(ww3_common.index, ww3_common.values,
         linestyle='-', linewidth=1.4)
 
 ax.set_xlabel('Data')
-ax.set_ylabel('Hs [m]')
-ax.set_title(f'Altura Significativa — PNBOIA Fortaleza vs WW3\n'
+ax.set_ylabel('Tp [s]')
+ax.set_title(f'Período de Pico — PNBOIA Fortaleza vs WW3\n'
              f'{START_DATE} a {END_DATE}')
 ax.legend()
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%d-%b'))

@@ -9,7 +9,6 @@ import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 from cartopy.mpl.ticker import (LongitudeFormatter, LatitudeFormatter)
-import skill_metrics as sm
 
 
 class Sushi:
@@ -272,6 +271,8 @@ def plot_taylor(ref, models, output_file):
     models (list of numpy.ndarray): The list of model data arrays.
     output_file (str): The path to save the Taylor diagram.
     """
+    import skill_metrics as sm  # optional: pip install SkillMetrics
+
     #  Create a figure for the Taylor diagram
     fig = plt.figure()
 
